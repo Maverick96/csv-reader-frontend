@@ -43,7 +43,7 @@ export default {
 <style>
 /* @import "~vuetify/src/stylus/main"; */
 
-.app {
+#app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -55,7 +55,7 @@ export default {
 }
 
 .nav-bar {
-  background-color: #77eaea;
+  background-color: beige;
   height: 75px;
   display: flex;
   justify-content: center;
@@ -72,7 +72,7 @@ export default {
 }
 
 .selected-nav {
-  background-color: #19b6c7 !important;
+  background-color: #948473 !important;
 }
 
 .none {
@@ -81,17 +81,17 @@ export default {
 
 .button {
   color: white;
-  background-color: #8fecec;
+  background-color: burlywood;
 }
 
 li,
 li:visited,
 li:active {
-  color: grey;
+  color: burlywood;
 }
 
 .link {
-  color: grey;
+  color: burlywood;
   display: inline-block;
   width: 100%;
   height: 100%;

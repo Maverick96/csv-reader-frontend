@@ -7,6 +7,9 @@
           :item-value="val"
           :item-text="val"
           label="Select File"
+          color="#FFE082"
+          item-color="#FFE082"
+          background-color="#FFF9C4"
           @change="selectFile($event)"
         ></v-select>
       </v-flex>

@@ -227,7 +227,7 @@ export default {
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
   outline-offset: -10px;
-  background: #1faba4;
+  background: #9e9081;
   color: dimgray;
   padding: 10px 10px;
   min-height: 50vh; /* minimum height */
