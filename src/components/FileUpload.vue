@@ -5,6 +5,18 @@
     </div>
 
     <div v-if="!isLoading" class="drag-drop">
+      <div class="file-name">
+        <v-flex xs12 sm6>
+          <v-text-field
+            label="File Name"
+            single-line
+            clearable
+            v-model="fileName"
+            @click:clear="clearInput"
+          ></v-text-field>
+        </v-flex>
+      </div>
+
       <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
         <div class="dropbox">
           <input
@@ -82,7 +94,7 @@ export default {
       isLoading: false,
       loaderMessage: "",
       formData: null,
-      allowUpload: false
+      fileName: ""
     };
   },
   components: {
@@ -108,7 +120,7 @@ export default {
       this.currentStatus = STATUS_INITIAL;
       this.uploadedFiles = [];
       this.uploadError = null;
-      this.allowUpload = false;
+      this.fileName = "";
     },
     resetLoaderProps() {
       this.progressVal = 0;
@@ -117,6 +129,13 @@ export default {
     },
 
     uploadFile() {
+      this.formData = new FormData();
+      this.formData.append(
+        this.fileName,
+        this.uploadedFiles[0],
+        this.uploadedFiles[0].name
+      );
+
       upload(this.formData)
         .then(res => {
           console.log("res", res);
@@ -140,14 +159,13 @@ export default {
         });
     },
     save() {
-      // upload data to the server
-      if (!this.isSaving) return;
+      // upload data to the server only if file is uploaded and fileName is entered
+      if (!this.isSaving || this.fileName === "") return;
       // subscribe to SSE
       this.listenToEvents();
     },
     filesChange(fieldName, fileList) {
       // handle file changes
-      this.formData = new FormData();
 
       if (!fileList.length) return;
       // File should not be more than 20 mb
@@ -157,9 +175,7 @@ export default {
       }
       console.log(fileList, "FILE");
       // append the files to FormData
-      this.formData.append(fieldName, fileList[0], fileList[0].name);
       this.uploadedFiles = fileList;
-      this.allowUpload = true;
       this.currentStatus = STATUS_SAVING;
     },
     listenToEvents() {
@@ -177,6 +193,7 @@ export default {
         const sseData = event.data;
 
         this.loaderMessage = sseData.msg;
+        // stage 1 denotes file is being uploaded
         if (sseData.stage == 1) {
           this.progressVal = sseData.msg;
         } else if (sseData.stage == 3 || sseData.error) {
@@ -189,6 +206,10 @@ export default {
           );
         }
       };
+    },
+    clearInput: function() {
+      this.fileName = "";
+      console.log("CLEARED");
     }
   },
   mounted() {
@@ -255,5 +276,9 @@ export default {
 .upload-button {
   width: 300px;
   height: 75px;
+}
+.file-name {
+  display: flex;
+  justify-content: center;
 }
 </style>
