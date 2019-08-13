@@ -15,15 +15,8 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
+### Environment Configuration
 
-### Lints and fixes files
 ```
-npm run lint
+VUE_APP_ROOT_URL --- URL of backend server
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
